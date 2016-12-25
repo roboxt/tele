@@ -13,7 +13,7 @@ update() {
 install_luarocks() {
   git clone https://github.com/keplerproject/luarocks.git
   cd luarocks
-  git checkout tags/v2.2.1 # Current stable
+  git checkout tags/v2.3.0-rc2 # Release Candidate
 
   PREFIX="$THIS_DIR/.luarocks"
 
@@ -33,12 +33,27 @@ install_luarocks() {
 }
 
 install_rocks() {
-  ./.luarocks/bin/luarocks install luasocket
+  ./.luarocks/bin/luarocks install luasec
   RET=$?; if [ $RET -ne 0 ];
     then echo "Error. Exiting."; exit $RET;
   fi
 
-  ./.luarocks/bin/luarocks install oauth
+  ./.luarocks/bin/luarocks install lbase64 20120807-3
+  RET=$?; if [ $RET -ne 0 ];
+    then echo "Error. Exiting."; exit $RET;
+  fi
+
+  ./.luarocks/bin/luarocks install luafilesystem
+  RET=$?; if [ $RET -ne 0 ];
+    then echo "Error. Exiting."; exit $RET;
+  fi
+
+  ./.luarocks/bin/luarocks install lub
+  RET=$?; if [ $RET -ne 0 ];
+    then echo "Error. Exiting."; exit $RET;
+  fi
+
+  ./.luarocks/bin/luarocks install luaexpat
   RET=$?; if [ $RET -ne 0 ];
     then echo "Error. Exiting."; exit $RET;
   fi
@@ -46,7 +61,6 @@ install_rocks() {
   ./.luarocks/bin/luarocks install redis-lua
   RET=$?; if [ $RET -ne 0 ];
     then echo "Error. Exiting."; exit $RET;
-  fi
 
   ./.luarocks/bin/luarocks install lua-cjson
   RET=$?; if [ $RET -ne 0 ];
